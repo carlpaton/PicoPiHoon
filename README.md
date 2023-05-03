@@ -7,3 +7,4 @@ A home for my micropython code attempts that run on a Pico Pi ❤️
 ## Pi Pico W
 
 - [Hello World](./Pi%20Pico%20W/HelloWorld/)
+- [Wifi and Web Server](./Pi%20Pico%20W/Wifi/)
