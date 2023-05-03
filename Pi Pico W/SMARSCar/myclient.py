@@ -1,13 +1,39 @@
 from machine import Pin
 
 led = Pin(15, Pin.OUT)
-html = """<!DOCTYPE html>
+html = """
+<!DOCTYPE html>
 <html>
-<head> <title>Pico W</title> </head>
-<body> <h1>Pico W</h1>
-<br>
-<input type='button' value='ON' onclick='toggle("on")'/>
-<input type='button' value='OFF' onclick='toggle("off")'/>
+<head>
+    <title>SMARS Car Controller</title>
+    <style>
+        input {
+        width: 200px;
+        height: 200px;
+        border: 2px solid rgb(96, 139, 168);
+            border-radius: 5px;
+            background-color: rgba(96, 139, 168, .2);
+        }        
+    </style>
+</head>
+<body>
+<table>
+    <tr>
+        <td></td>
+        <td><input type='button' value='FORWARD' onclick='toggle("on")'/></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><input type='button' value='LEFT' onclick='toggle("on")'/></td>
+        <td><input type='button' value='STOP' onclick='toggle("off")'/></td>
+        <td><input type='button' value='RIGHT' onclick='toggle("on")'/></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><input type='button' value='BACKWARD' onclick='toggle("on")'/></td>
+        <td></td>
+    </tr>                 
+</table>
 <script>
 function toggle(led){
     var xhttp = new XMLHttpRequest();
