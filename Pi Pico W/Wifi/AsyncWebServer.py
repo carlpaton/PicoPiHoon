@@ -1,8 +1,9 @@
 import network, socket, time
-from machine import Pin
+from machine import Pin, WDT
 import uasyncio as asyncio
 from mywifi import networksetting
 
+wdt = WDT(timeout=8388) # 8.3 seconds
 ssid, password = networksetting()
 led = Pin(15, Pin.OUT)
 onboard = Pin("LED", Pin.OUT, value=0)
@@ -71,13 +72,22 @@ async def serve_client(reader, writer):
     await writer.drain()
     await writer.wait_closed()
     print("Client disconnected")
-    
+
+def boot_led():   
+    onboard.off()
+    boot_show = 3
+    wait_for = 0.3
+    while boot_show > 0:
+        print(boot_show)
+        onboard.on()
+        await asyncio.sleep(wait_for)
+        onboard.off()
+        await asyncio.sleep(wait_for)
+        boot_show -= 1  
+
 async def main():
-    # Boot
-    print('Boot 0...')
-    onboard.on()
-    await asyncio.sleep(5)
-    print('Boot 1...')
+    print('Boot...')
+    await boot_led()
     
     print('Connecting to Network...')
     connect_to_network()
@@ -85,6 +95,7 @@ async def main():
     print('Setting up webserver...')
     asyncio.create_task(asyncio.start_server(serve_client, "0.0.0.0", 80))
     while True:
+        wdt.feed() #resets countdown
         onboard.on()
         print("heartbeat")
         await asyncio.sleep(0.25)
