@@ -1,8 +1,9 @@
 import network, socket, time
-from machine import Pin
+from machine import Pin, WDT
 import uasyncio as asyncio
 from mywifi import networksetting
 
+wdt = WDT(timeout=8388) # 8.3 seconds
 ssid, password = networksetting()
 led = Pin(15, Pin.OUT)
 onboard = Pin("LED", Pin.OUT, value=0)
@@ -94,6 +95,7 @@ async def main():
     print('Setting up webserver...')
     asyncio.create_task(asyncio.start_server(serve_client, "0.0.0.0", 80))
     while True:
+        wdt.feed() #resets countdown
         onboard.on()
         print("heartbeat")
         await asyncio.sleep(0.25)
