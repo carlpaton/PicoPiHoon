@@ -3,6 +3,7 @@ import uasyncio as asyncio
 from myboot import boot_led, heartbeat
 from mynetwork import connect_to_network
 from myclient import serve_client
+from mylog import log_error
 
 async def main():
     print('Boot...')
@@ -17,6 +18,8 @@ async def main():
 
 try:
     asyncio.run(main())
+except Exception as e:
+    log_error(e)
 finally:
     asyncio.new_event_loop()
 
