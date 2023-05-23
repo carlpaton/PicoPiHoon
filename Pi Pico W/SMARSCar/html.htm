@@ -3,35 +3,88 @@
 <head>
     <title>SMARS Car Controller</title>
     <style>
-        input {
-        width: 200px;
-        height: 200px;
-        border: 2px solid rgb(96, 139, 168);
-            border-radius: 5px;
-            background-color: rgba(96, 139, 168, .2);
-        }        
+        :root {
+          --grid-width--desktop: 600px;
+        }
+
+        * {
+          box-sizing: border-box;
+        }
+
+        html,
+        body {
+          height: 100%;
+          margin: 0;
+        }
+
+        /* Default styles for all screens */
+        .container {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          grid-template-rows: repeat(3, 1fr);
+          gap: 8px;
+          height: 100vh;
+        }
+
+        .item {
+          padding: 0;
+          text-align: center;
+        }
+
+        input[type="button"] {
+          width: 100%;
+          height: 100%;
+          border: 2px solid rgb(96, 139, 168);
+          border-radius: 5px;
+          background-color: rgba(96, 139, 168, 0.2);
+        }
+
+        /* Styles for screens with a width greater than or equal to 768px (desktop) */
+        @media screen and (min-width: 768px) {
+          .wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+          }
+
+          .container {
+            max-width: var(--grid-width--desktop);
+            margin: 0 auto;
+            height: auto;
+          }
+
+          .item {
+            height: calc(var(--grid-width--desktop) / 3);
+            width: calc(var(--grid-width--desktop) / 3);
+          }
+        }       
     </style>
 </head>
 <body>
-<center>
-<table>
-    <tr>
-        <td></td>
-        <td><input type='button' value='FORWARD' onclick='toggle("on")'/></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td><input type='button' value='LEFT' onclick='toggle("on")'/></td>
-        <td><input type='button' value='STOP' onclick='toggle("off")'/></td>
-        <td><input type='button' value='RIGHT' onclick='toggle("on")'/></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td><input type='button' value='BACKWARD' onclick='toggle("on")'/></td>
-        <td></td>
-    </tr>                 
-</table>
-</center>
+<div class="wrapper">
+  <div class="container">
+    <div class="item"> </div>
+    <div class="item">
+      <input type='button' value='FORWARD' onclick='toggle("on")' />
+    </div>
+    <div class="item"></div>
+    <div class="item">
+      <input type='button' value='LEFT' onclick='toggle("on")' />
+    </div>
+    <div class="item">
+      <input type='button' value='STOP' onclick='toggle("off")' />
+    </div>
+    <div class="item">
+      <input type='button' value='RIGHT' onclick='toggle("on")' />
+    </div>
+    <div class="item"></div>
+    <div class="item">
+      <input type='button' value='BACKWARD' onclick='toggle("on")' />
+    </div>
+    <div class="item"></div>
+  </div>
+</div>
 <script>
 function toggle(led){
     var xhttp = new XMLHttpRequest();
