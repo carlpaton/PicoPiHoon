@@ -1,9 +1,9 @@
 from machine import Pin
 
-motor_a_fw = Pin(18, Pin.OUT)
-motor_a_bk = Pin(19, Pin.OUT)
-motor_b_fw = Pin(20, Pin.OUT)
-motor_b_bk = Pin(21, Pin.OUT)
+motor_right_fw = Pin(18, Pin.OUT)
+motor_right_bk = Pin(21, Pin.OUT)
+motor_left_fw = Pin(19, Pin.OUT)
+motor_left_bk = Pin(20, Pin.OUT)
 
 def read_html():
     text_file = open("html.htm", "r")
@@ -12,39 +12,35 @@ def read_html():
     return data
 
 def move_forward():
-    print("moving forward")
-    motor_a_fw.value(1)
-    motor_b_fw.value(1)
-    motor_a_bk.value(0)
-    motor_b_bk.value(0)
-    
+    stop_motors()
+    print("moving back")
+    motor_right_fw.value(1)
+    motor_left_fw.value(1)
+
+def move_back():
+    stop_motors()
+    print("moving back")
+    motor_right_bk.value(1)
+    motor_left_bk.value(1)
+
 def move_left():
+    stop_motors()
     print("moving left")
-    motor_a_fw.value(1)
-    motor_b_fw.value(0)
-    motor_a_bk.value(0)
-    motor_b_bk.value(1)
+    motor_left_bk.value(1)
+    motor_right_fw.value(1)
+
+def move_right():
+    stop_motors()
+    print("moving right")
+    motor_right_bk.value(1)
+    motor_left_fw.value(1)
 
 def stop_motors():
     print("stop motors")
-    motor_a_fw.value(0)
-    motor_b_fw.value(0)
-    motor_a_bk.value(0)
-    motor_b_bk.value(0)
-
-def move_right():
-    print("moving right")
-    motor_a_fw.value(0)
-    motor_b_fw.value(1)
-    motor_a_bk.value(1)
-    motor_b_bk.value(0)
-
-def move_back():
-    print("moving back")
-    motor_a_fw.value(0)
-    motor_b_fw.value(0)
-    motor_a_bk.value(1)
-    motor_b_bk.value(1)
+    motor_right_fw.value(0)
+    motor_left_fw.value(0)
+    motor_right_bk.value(0)
+    motor_left_bk.value(0)
 
 async def serve_client(reader, writer):
     stop_motors()
